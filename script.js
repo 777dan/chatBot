@@ -1,11 +1,3 @@
-// const botPhrases = [
-//     "Our manager will call you back soon!",
-//     "For more details please call 123456789",
-//     "Stay in touch!",
-//     "Today is beautiful weather!",
-//     "It’s very nice to communicate with you!"
-// ];
-
 const jsPhrases = [
     "JavaScript is essential for front-end and back-end development. Explore its full potential.",
     "Use version control systems like Git to collaborate efficiently with other developers on JavaScript projects.",
@@ -24,34 +16,40 @@ const htmlPhrases = [
     "Practice creating responsive web pages to reach a broader audience."
 ];
 
+const phrases = {
+    "javascript": jsPhrases,
+    "php": phpPhrases,
+    "html": htmlPhrases,
+    "who are you?": "I'm bot George",
+    "goodbye": "Bye!",
+    "hello": "Hi!"
+}
+
 function talkTo() {
-    while (true) {
+    loop1: while (true) {
         let answer = prompt("Write something to the bot").toLowerCase();
-        if (answer === "hello") {
-            alert("Hi!");
+        let unknownAsk = false;
+        for (const key in phrases) {
+            if (answer.includes(key)) {
+                if (typeof phrases[key] === 'object') {
+                    let rand = Math.floor(Math.random() * phrases[key].length)
+                    alert(phrases[key][rand]);
+                    unknownAsk = false;
+                    break;
+                } else {
+                    alert(phrases[key]);
+                    if (phrases[key] === "Bye!") {
+                        break loop1;
+                    }
+                    unknownAsk = false;
+                    break;
+                }
+            } else {
+                unknownAsk = true;
+            }
         }
-        else if (answer.includes("javascript")) {
-            let rand1 = Math.floor(Math.random() * jsPhrases.length)
-            alert(jsPhrases[rand1]);
-        }
-        else if (answer.includes("php")) {
-            let rand2 = Math.floor(Math.random() * phpPhrases.length)
-            alert(phpPhrases[rand2]);
-        }
-        else if (answer.includes("html")) {
-            let rand3 = Math.floor(Math.random() * htmlPhrases.length)
-            alert(htmlPhrases[rand3]);
-        }
-        else if (answer === "who are you?") {
-            alert("I'm bot George");
-        }
-        else if (answer === "goodbye") {
-            alert("Bye!");
-            break;
-        } else {
+        if (unknownAsk) {
             alert("I want to talk about JavaScript!");
-            // let rand = Math.floor(Math.random() * botPhrases.length)
-            // alert(botPhrases[rand]);
         }
     }
 }
